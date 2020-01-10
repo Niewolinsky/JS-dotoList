@@ -1,6 +1,7 @@
 'use strict'
-import MagicGrid          from 'magic-grid';
-import { render, cancel } from 'timeago.js';
+import MagicGrid    from '/web_modules/magic-grid.js';
+import { render }   from '/web_modules/timeago.js';
+import particlesJS  from '/web_modules/particlesJS';
  
 let timestamps = document.querySelectorAll('.timeago')
 
@@ -45,7 +46,7 @@ function addNote(title, note) {
   card.className = "card";
 
   let removeLogo = document.createElement("img");
-  removeLogo.src="/remove.d6bd1ce1.svg"
+  removeLogo.src="svgs/remove.svg"
   removeLogo.alt="Remove Logo"
   removeLogo.className = "removeLogo";
 
@@ -60,7 +61,7 @@ function addNote(title, note) {
   let timewrapDiv = document.createElement("div");
   timewrapDiv.classList.add("timestampWrapper");
   let timeLogo = document.createElement("img");
-  timeLogo.src="/time.7eb9e016.svg"
+  timeLogo.src="svgs/time.svg"
   timeLogo.alt="Clock Logo"
   timeLogo.className = "clockLogo";
   let timeDiv = document.createElement("div");
@@ -129,7 +130,3 @@ newNoteModal.onclick = function(event) {
     modalBackground.classList.remove("boxblur");
   }
 }
-
-particlesJS.load('particles-js', 'assets/particles.json', function() {
-  console.log('callback - particles.js config loaded');
-});

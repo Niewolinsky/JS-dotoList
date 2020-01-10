@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "magic-grid": "./magic-grid.js",
+    "particles": "./particles.js",
+    "timeago": "./timeago.js"
+  }
+}
