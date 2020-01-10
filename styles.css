@@ -58,6 +58,18 @@
     --checked-left: 25px;
 }
 
+.filter-green {
+    filter: brightness(1.15) hue-rotate(120deg) saturate(0.41);
+}
+
+.filter-red {
+    filter: saturate(1.2);
+}
+
+.filter-orange {
+    filter: brightness(1.9) hue-rotate(42deg) saturate(1.5);
+}
+
 html {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;

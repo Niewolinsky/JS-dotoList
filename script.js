@@ -43,7 +43,8 @@ window.onscroll = function() {
   console.log('click');
 };
 
-function addNote(title, note) {
+function addNote(title, note, checked) {
+  console.log(checked);
   let card = document.createElement("div");
   card.className = "card";
 
@@ -51,6 +52,7 @@ function addNote(title, note) {
   removeLogo.src="svgs/remove.svg"
   removeLogo.alt="Remove Logo"
   removeLogo.className = "removeLogo";
+  removeLogo.classList.add(checked);
 
   let contentDiv = document.createElement("div");
   contentDiv.className = "cardContent";
@@ -120,6 +122,14 @@ cardContainer.onclick = function(event) {
   if (event.target.classList.contains("removeLogo")) delNote(event.target);
 }
 
+testSwitch.onclick = function(event) {
+  if (event.target.id == 'one') checked = 'filter-green'
+  if (event.target.id == 'two') checked = 'filter-orange'
+  if (event.target.id == 'three') checked = 'filter-red'
+}
+
+
+let checked = 'filter-green';
 // ADD NEW NOTE MODAL
 newNoteModal.onclick = function(event) {
   if (event.target.classList.contains("modalRemoveLogo")) {
@@ -128,7 +138,7 @@ newNoteModal.onclick = function(event) {
   }
   if (event.target.classList.contains("modalAcceptLogo")) {
     newNoteModal.style.display = "none";
-    addNote(title1.value, note1.value);
+    addNote(title1.value, note1.value, checked);
     modalBackground.classList.remove("boxblur");
   }
 }

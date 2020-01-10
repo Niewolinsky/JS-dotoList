@@ -22,7 +22,31 @@
   <div id="cardContainer">
 
     <div class="card">
-      <img src="svgs/remove.svg" alt="Remove Logo" class="removeLogo">
+      <img src="svgs/remove.svg" alt="Remove Logo" class="removeLogo filter-red">
+      <div class="cardContent">
+        <h2>Be subtlea sd das dsa asd sda sad</h2>
+        <p>Layer colors with an abstract design or subtle background pattern. Patterns load a lot faster than images and can support retina resolutions automatically via SVG.</p>
+        <div class="timestampWrapper">
+          <img src="svgs/time.svg" alt="Clock Logo" class="clockLogo">
+          <div class="timeago" datetime="1578649496"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="svgs/remove.svg" alt="Remove Logo" class="removeLogo filter-green">
+      <div class="cardContent">
+        <h2>Be subtlea sd das dsa asd sda sad</h2>
+        <p>Layer colors with an abstract design or subtle background pattern. Patterns load a lot faster than images and can support retina resolutions automatically via SVG.</p>
+        <div class="timestampWrapper">
+          <img src="svgs/time.svg" alt="Clock Logo" class="clockLogo">
+          <div class="timeago" datetime="1578649496"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="svgs/remove.svg" alt="Remove Logo" class="removeLogo filter-orange">
       <div class="cardContent">
         <h2>Be subtlea sd das dsa asd sda sad</h2>
         <p>Layer colors with an abstract design or subtle background pattern. Patterns load a lot faster than images and can support retina resolutions automatically via SVG.</p>
@@ -40,7 +64,7 @@
 
   <div id="newNoteModal" class="modal card" style="display: none">
     <img src="svgs/remove.svg" alt="Remove Logo" class="modalRemoveLogo">
-    <img src="svgs/remove.svg" alt="Remove Logo" class="modalAcceptLogo">
+    <img src="svgs/accept.svg" alt="Accept Logo" class="modalAcceptLogo" style="filter: hue-rotate(25deg)">
     
     <div class="modalCardContent">
       <input type="text" placeholder="Title..." class="title" id="title1">
@@ -52,13 +76,13 @@
       <label><input type="radio" name="priority" value="low"/> Low Priority </label>
     </div> -->
 
-    <div class="switchB">
-      <input name="switchB" id="one" type="radio" checked/>
+    <div class="switchB" id="testSwitch">
+      <input name="switchB" id="one" type="radio" value="filter-red" checked/>
       <label for="one" class="switchB__label">HIGH</label>
       <input name="switchB" id="two" type="radio" />
-      <label for="two" class="switchB__label">MED</label>
+      <label for="two" class="switchB__label" value="filter-orange">MED</label>
       <input name="switchB" id="three" type="radio" />
-      <label for="three" class="switchB__label" >LOW</label>
+      <label for="three" class="switchB__label" value="filter-green">LOW</label>
       <div class="switchB__indicator" ></div>
     </div>
   </div>
