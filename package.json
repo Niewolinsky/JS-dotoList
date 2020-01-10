@@ -1,0 +1,17 @@
+{
+  "name": "dotoList2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "magic-grid": "^3.2.4",
+    "particles.js": "^2.0.0",
+    "timeago.js": "^4.0.2"
+  }
+}
