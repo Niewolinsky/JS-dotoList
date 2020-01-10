@@ -39,18 +39,31 @@
   <button id="addButton"></button>
 
   <div id="newNoteModal" class="modal card" style="display: none">
+    <img src="svgs/remove.svg" alt="Remove Logo" class="modalRemoveLogo">
+    <img src="svgs/remove.svg" alt="Remove Logo" class="modalAcceptLogo">
+    
     <div class="modalCardContent">
       <input type="text" placeholder="Title..." class="title" id="title1">
       <textarea name="note" class="note" rows="5" cols="33" placeholder="Note..." id="note1"></textarea>
     </div>
-    <img src="svgs/remove.svg" alt="Remove Logo" class="modalRemoveLogo">
-    <img src="svgs/remove.svg" alt="Remove Logo" class="modalAcceptLogo">
-    <div class="priority">
-      <button>important</button>
-      <button>medium</button>
-      <button>unsettling</button>
+    <!-- <div class="priority">
+      <label><input type="radio" name="priority" value="high"/> High Priority </label>
+      <label><input type="radio" name="priority" value="med"/> Medium Priority </label>
+      <label><input type="radio" name="priority" value="low"/> Low Priority </label>
+    </div> -->
+
+    <div class="switchB">
+      <input name="switchB" id="one" type="radio" checked/>
+      <label for="one" class="switchB__label">HIGH</label>
+      <input name="switchB" id="two" type="radio" />
+      <label for="two" class="switchB__label">MED</label>
+      <input name="switchB" id="three" type="radio" />
+      <label for="three" class="switchB__label" >LOW</label>
+      <div class="switchB__indicator" ></div>
     </div>
   </div>
+
+  <div id="particles-js"></div>
 
   <script type="module" src="script.js"></script>
 </body>

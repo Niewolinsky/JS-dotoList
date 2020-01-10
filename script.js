@@ -1,7 +1,9 @@
 'use strict'
 import MagicGrid    from '/web_modules/magic-grid.js';
 import { render }   from '/web_modules/timeago.js';
-import particlesJS  from '/web_modules/particlesJS';
+import '/web_modules/particles.js';
+
+particlesJS.load('particles-js', 'particlesconfig.json')
  
 let timestamps = document.querySelectorAll('.timeago')
 
