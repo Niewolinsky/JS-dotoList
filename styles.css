@@ -70,6 +70,10 @@
     filter: brightness(1.9) hue-rotate(42deg) saturate(1.5);
 }
 
+.filter-grey {
+    filter: contrast(2.25) grayscale(1) hue-rotate(40deg) invert(1) saturate(1.39);
+}
+
 html {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
