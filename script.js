@@ -44,7 +44,6 @@ window.onscroll = function() {
 };
 
 function addNote(title, note, checked) {
-  console.log(checked);
   let card = document.createElement("div");
   card.className = "card";
 
@@ -122,14 +121,6 @@ cardContainer.onclick = function(event) {
   if (event.target.classList.contains("removeLogo")) delNote(event.target);
 }
 
-testSwitch.onclick = function(event) {
-  if (event.target.id == 'one') checked = 'filter-green'
-  if (event.target.id == 'two') checked = 'filter-orange'
-  if (event.target.id == 'three') checked = 'filter-red'
-}
-
-
-let checked = 'filter-green';
 // ADD NEW NOTE MODAL
 newNoteModal.onclick = function(event) {
   if (event.target.classList.contains("modalRemoveLogo")) {
@@ -138,6 +129,8 @@ newNoteModal.onclick = function(event) {
   }
   if (event.target.classList.contains("modalAcceptLogo")) {
     newNoteModal.style.display = "none";
+
+    let checked = document.querySelector('input[name="priority"]:checked').value;
     addNote(title1.value, note1.value, checked);
     modalBackground.classList.remove("boxblur");
   }

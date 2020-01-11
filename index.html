@@ -77,13 +77,14 @@
     </div> -->
 
     <div class="switchB" id="testSwitch">
-      <input name="switchB" id="one" type="radio" value="filter-red" checked/>
-      <label for="one" class="switchB__label">HIGH</label>
-      <input name="switchB" id="two" type="radio" />
-      <label for="two" class="switchB__label" value="filter-orange">MED</label>
-      <input name="switchB" id="three" type="radio" />
-      <label for="three" class="switchB__label" value="filter-green">LOW</label>
-      <div class="switchB__indicator" ></div>
+      <input type="radio" name="priority" id="low" value="filter-green" checked/>
+        <label for="low" class="switchB__label">•</label>
+      <input type="radio" name="priority" id="med" value="filter-orange"/>
+        <label for="med" class="switchB__label">•</label>
+      <input type="radio" name="priority" id="high" value="filter-red"/>
+        <label for="high" class="switchB__label">•</label>
+      
+      <div class="switchB__indicator"></div>
     </div>
   </div>
 
