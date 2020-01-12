@@ -53,6 +53,25 @@ window.addEventListener('scroll', throttle(x, 1000))
 
 function addNote(title, note, checked) {
   if (isEmptyOrSpaces(title) && isEmptyOrSpaces(note)) {
+    let notification = document.createElement("div");
+    notification.classList.add('notification');
+
+    let notificationIcon = document.createElement("div");
+    notificationIcon.classList.add('notificationIcon');
+    notificationIcon.innerHTML = '!';
+
+    let notificationMessage = document.createElement("div"); 
+    notificationMessage.classList.add('notificationMessage');
+    notificationMessage.innerHTML = 'Cannot add empty notes!';
+
+    notification.appendChild(notificationIcon);
+    notification.appendChild(notificationMessage);
+    document.body.appendChild(notification)
+
+    setTimeout(function() {
+      document.body.removeChild(document.body.lastChild);
+    }, 4000);
+
     return;
   }
 
