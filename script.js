@@ -169,6 +169,8 @@ addButton.onclick = function(event) {
 
 function delNote(note) {
   //!DODAJ USUWANIE NOTATKI Z CACHE, ZROB MOZE DATA-ATTRIBUTE DO KAZDEJ NOTATKI
+  //??BEDZIESZ MUSIAL RENDEROWAC NA NOWO
+  //## CZEMU U CIEBIE W EDYTORZE NIE MA KOLOROW NA ROZNYCH TEKSTACH TAK JAK NA WEBDEV SIMPLIFIED? MASZ WSZYSTKO BIALE PRAWIE A ON WSZYSTKO KOLORWE
   note.parentNode.parentNode.removeChild(note.parentNode);
 
   magicGrid = new MagicGrid({
