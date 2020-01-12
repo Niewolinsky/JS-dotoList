@@ -1,17 +1,5 @@
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var en_US = createCommonjsModule(function (module, exports) {
-Object.defineProperty(exports, "__esModule", { value: true });
 var EN_US = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'];
-function default_1(diff, idx) {
+function en_US (diff, idx) {
     if (idx === 0)
         return ['just now', 'right now'];
     var unit = EN_US[Math.floor(idx / 2)];
@@ -19,33 +7,19 @@ function default_1(diff, idx) {
         unit += 's';
     return [diff + " " + unit + " ago", "in " + diff + " " + unit];
 }
-exports.default = default_1;
 
-});
-
-unwrapExports(en_US);
-
-var zh_CN = createCommonjsModule(function (module, exports) {
-Object.defineProperty(exports, "__esModule", { value: true });
 var ZH_CN = ['秒', '分钟', '小时', '天', '周', '个月', '年'];
-function default_1(diff, idx) {
+function zh_CN (diff, idx) {
     if (idx === 0)
         return ['刚刚', '片刻后'];
     var unit = ZH_CN[~~(idx / 2)];
     return [diff + " " + unit + "\u524D", diff + " " + unit + "\u540E"];
 }
-exports.default = default_1;
 
-});
-
-unwrapExports(zh_CN);
-
-var register = createCommonjsModule(function (module, exports) {
 /**
  * Created by hustcc on 18/5/20.
  * Contract: i@hust.cc
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * All supported locales
  */
@@ -55,7 +29,7 @@ var Locales = {};
  * @param locale
  * @param func
  */
-exports.register = function (locale, func) {
+var register = function (locale, func) {
     Locales[locale] = func;
 };
 /**
@@ -63,22 +37,14 @@ exports.register = function (locale, func) {
  * @param locale
  * @returns {*}
  */
-exports.getLocale = function (locale) {
+var getLocale = function (locale) {
     return Locales[locale] || Locales['en_US'];
 };
 
-});
-
-unwrapExports(register);
-var register_1 = register.register;
-var register_2 = register.getLocale;
-
-var date = createCommonjsModule(function (module, exports) {
 /**
  * Created by hustcc on 18/5/20.
  * Contract: i@hust.cc
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 var SEC_ARRAY = [
     60,
     60,
@@ -109,7 +75,6 @@ function toDate(input) {
         .replace(/([+-]\d\d):?(\d\d)/, ' $1$2'); // -04:00 -> -0400
     return new Date(input);
 }
-exports.toDate = toDate;
 /**
  * format the diff second to *** time ago, with setting locale
  * @param diff
@@ -160,7 +125,6 @@ function formatDiff(diff, localeFunc) {
         idx += 1;
     return localeFunc(diff, idx, totalSec)[agoIn].replace('%s', diff.toString());
 }
-exports.formatDiff = formatDiff;
 /**
  * calculate the diff second between date to be formatted an now date.
  * @param date
@@ -171,7 +135,6 @@ function diffSec(date, relativeDate) {
     var relDate = relativeDate ? toDate(relativeDate) : new Date();
     return (+relDate - +toDate(date)) / 1000;
 }
-exports.diffSec = diffSec;
 /**
  * nextInterval: calculate the next interval time.
  * - diff: the diff sec between now and date to be formatted.
@@ -191,19 +154,6 @@ function nextInterval(diff) {
     d = d ? rst - d : rst;
     return Math.ceil(d);
 }
-exports.nextInterval = nextInterval;
-
-});
-
-unwrapExports(date);
-var date_1 = date.toDate;
-var date_2 = date.formatDiff;
-var date_3 = date.diffSec;
-var date_4 = date.nextInterval;
-
-var format = createCommonjsModule(function (module, exports) {
-Object.defineProperty(exports, "__esModule", { value: true });
-
 
 /**
  * format a TDate into string
@@ -211,20 +161,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param locale
  * @param opts
  */
-exports.format = function (date$1, locale, opts) {
+var format = function (date, locale, opts) {
     // diff seconds
-    var sec = date.diffSec(date$1, opts && opts.relativeDate);
+    var sec = diffSec(date, opts && opts.relativeDate);
     // format it with locale
-    return date.formatDiff(sec, register.getLocale(locale));
+    return formatDiff(sec, getLocale(locale));
 };
 
-});
-
-unwrapExports(format);
-var format_1 = format.format;
-
-var dom = createCommonjsModule(function (module, exports) {
-Object.defineProperty(exports, "__esModule", { value: true });
 var ATTR_TIMEAGO_TID = 'timeago-id';
 /**
  * get the datetime attribute, `datetime` are supported.
@@ -234,7 +177,6 @@ var ATTR_TIMEAGO_TID = 'timeago-id';
 function getDateAttribute(node) {
     return node.getAttribute('datetime');
 }
-exports.getDateAttribute = getDateAttribute;
 /**
  * set the node attribute, native DOM
  * @param node
@@ -245,7 +187,6 @@ function setTimerId(node, timerId) {
     // @ts-ignore
     node.setAttribute(ATTR_TIMEAGO_TID, timerId);
 }
-exports.setTimerId = setTimerId;
 /**
  * get the timer id
  * @param node
@@ -253,19 +194,6 @@ exports.setTimerId = setTimerId;
 function getTimerId(node) {
     return parseInt(node.getAttribute(ATTR_TIMEAGO_TID));
 }
-exports.getTimerId = getTimerId;
-
-});
-
-unwrapExports(dom);
-var dom_1 = dom.getDateAttribute;
-var dom_2 = dom.setTimerId;
-var dom_3 = dom.getTimerId;
-
-var realtime = createCommonjsModule(function (module, exports) {
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
 
 // all realtime timer
 var TIMER_POOL = {};
@@ -278,20 +206,20 @@ var clear = function (tid) {
     delete TIMER_POOL[tid];
 };
 // run with timer(setTimeout)
-function run(node, date$1, localeFunc, opts) {
+function run(node, date, localeFunc, opts) {
     // clear the node's exist timer
-    clear(dom.getTimerId(node));
+    clear(getTimerId(node));
     var relativeDate = opts.relativeDate, minInterval = opts.minInterval;
     // get diff seconds
-    var diff = date.diffSec(date$1, relativeDate);
+    var diff = diffSec(date, relativeDate);
     // render
-    node.innerText = date.formatDiff(diff, localeFunc);
+    node.innerText = formatDiff(diff, localeFunc);
     var tid = setTimeout(function () {
-        run(node, date$1, localeFunc, opts);
-    }, Math.min(Math.max(date.nextInterval(diff), minInterval || 1) * 1000, 0x7fffffff));
+        run(node, date, localeFunc, opts);
+    }, Math.min(Math.max(nextInterval(diff), minInterval || 1) * 1000, 0x7fffffff));
     // there is no need to save node in object. Just save the key
     TIMER_POOL[tid] = 0;
-    dom.setTimerId(node, tid);
+    setTimerId(node, tid);
 }
 /**
  * cancel a timer or all timers
@@ -300,13 +228,12 @@ function run(node, date$1, localeFunc, opts) {
 function cancel(node) {
     // cancel one
     if (node)
-        clear(dom.getTimerId(node));
+        clear(getTimerId(node));
     // cancel all
     // @ts-ignore
     else
         Object.keys(TIMER_POOL).forEach(clear);
 }
-exports.cancel = cancel;
 /**
  * render a dom realtime
  * @param nodes
@@ -318,46 +245,16 @@ function render(nodes, locale, opts) {
     // @ts-ignore
     var nodeList = nodes.length ? nodes : [nodes];
     nodeList.forEach(function (node) {
-        run(node, dom.getDateAttribute(node), register.getLocale(locale), opts || {});
+        run(node, getDateAttribute(node), getLocale(locale), opts || {});
     });
     return nodeList;
 }
-exports.render = render;
 
-});
-
-unwrapExports(realtime);
-var realtime_1 = realtime.cancel;
-var realtime_2 = realtime.render;
-
-var lib = createCommonjsModule(function (module, exports) {
 /**
  * Created by hustcc on 18/5/20.
  * Contract: i@hust.cc
  */
-var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var en_US_1 = __importDefault(en_US);
-var zh_CN_1 = __importDefault(zh_CN);
+register('en_US', en_US);
+register('zh_CN', zh_CN);
 
-exports.register = register.register;
-register.register('en_US', en_US_1.default);
-register.register('zh_CN', zh_CN_1.default);
-
-exports.format = format.format;
-
-exports.render = realtime.render;
-exports.cancel = realtime.cancel;
-
-});
-
-var index = unwrapExports(lib);
-var lib_1 = lib.register;
-var lib_2 = lib.format;
-var lib_3 = lib.render;
-var lib_4 = lib.cancel;
-
-export default index;
-export { lib_4 as cancel, lib_2 as format, lib_1 as register, lib_3 as render };
+export { cancel, format, register, render };

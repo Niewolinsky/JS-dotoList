@@ -65,16 +65,11 @@
   <div id="newNoteModal" class="modal card" style="display: none">
     <img src="svgs/remove.svg" alt="Remove Logo" class="modalRemoveLogo filter-grey">
     <img src="svgs/accept.svg" alt="Accept Logo" class="modalAcceptLogo filter-grey">
-    
-    <div class="modalCardContent">
+
+    <form class="modalCardContent" id="modalCardContent">
       <input type="text" placeholder="Title..." class="title" id="title1">
       <textarea name="note" class="note" rows="5" cols="33" placeholder="Note..." id="note1"></textarea>
-    </div>
-    <!-- <div class="priority">
-      <label><input type="radio" name="priority" value="high"/> High Priority </label>
-      <label><input type="radio" name="priority" value="med"/> Medium Priority </label>
-      <label><input type="radio" name="priority" value="low"/> Low Priority </label>
-    </div> -->
+    </form>
 
     <div class="switchB" id="testSwitch">
       <input type="radio" name="priority" id="low" value="filter-green" checked/>

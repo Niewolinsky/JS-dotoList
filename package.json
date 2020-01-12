@@ -12,6 +12,7 @@
   "dependencies": {
     "magic-grid": "^3.2.4",
     "particles.js": "^2.0.0",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "tiny-throttle": "^1.0.1"
   }
 }

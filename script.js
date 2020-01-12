@@ -1,6 +1,7 @@
 'use strict'
 import MagicGrid    from '/web_modules/magic-grid.js';
 import { render }   from '/web_modules/timeago.js';
+import { throttle } from '/web_modules/tiny-throttle.js'
 import '/web_modules/particles.js';
 
 particlesJS.load('particles-js', 'particlesconfig.json')
@@ -16,6 +17,10 @@ let magicGrid = new MagicGrid({
     useMin: true
 })
 magicGrid.listen()
+
+function isEmptyOrSpaces(str){
+  return str === null || str.match(/^\s*$/) !== null;
+}
 
 const toggleSwitch = document.querySelector('input[type="checkbox"]');
 function switchTheme(e) {
@@ -38,12 +43,19 @@ function stickiedHeader() {
 }
 
 // !TUTAJ performance issue
-window.onscroll = function() {
+let x = function() {
   stickiedHeader();
   console.log('click');
 };
 
+window.addEventListener('scroll', throttle(x, 1000))
+// !FIX THIS
+
 function addNote(title, note, checked) {
+  if (isEmptyOrSpaces(title) && isEmptyOrSpaces(note)) {
+    return;
+  }
+
   let card = document.createElement("div");
   card.className = "card";
 
@@ -98,9 +110,9 @@ function addNote(title, note, checked) {
 }
 
 addButton.onclick = function(event) {
-  // addNote();
   newNoteModal.style.removeProperty('display');
   modalBackground.classList.add("boxblur");
+  document.getElementsByClassName('particles-js-canvas-el')[0].classList.add("boxblur");
 }
 
 function delNote(note) {
@@ -125,13 +137,16 @@ cardContainer.onclick = function(event) {
 newNoteModal.onclick = function(event) {
   if (event.target.classList.contains("modalRemoveLogo")) {
     newNoteModal.style.display = "none";
+    modalCardContent.reset();
     modalBackground.classList.remove("boxblur");
+    document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
   }
   if (event.target.classList.contains("modalAcceptLogo")) {
     newNoteModal.style.display = "none";
-
     let checked = document.querySelector('input[name="priority"]:checked').value;
     addNote(title1.value, note1.value, checked);
+    modalCardContent.reset();
     modalBackground.classList.remove("boxblur");
+    document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
   }
 }

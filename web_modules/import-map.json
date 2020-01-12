@@ -1,7 +1,7 @@
 {
   "imports": {
     "magic-grid": "./magic-grid.js",
-    "particles": "./particles.js",
-    "timeago": "./timeago.js"
+    "timeago": "./timeago.js",
+    "tiny-throttle": "./tiny-throttle.js"
   }
 }

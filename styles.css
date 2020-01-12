@@ -140,6 +140,8 @@ header {
     flex-direction: column;
     align-items: flex-start;
     padding: 30px 15px;
+    word-break: break-all;
+    width: 100%;
 }
 
 .removeLogo {
@@ -269,7 +271,7 @@ input {
     border-color: unset;
     border-style: unset;
     border-width: unset;
-    border-bottom: solid 2px black;
+    border-bottom: solid 2px #ccc;
 }
 
 input:focus {
