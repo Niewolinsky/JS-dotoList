@@ -5,15 +5,15 @@ import { throttle } from '/web_modules/tiny-throttle.js'
 import '/web_modules/particles.js';
 particlesJS.load('particles-js', 'particlesconfig.json')
 
-const LOCAL_STORAGE_TITLE_KEY = 'todo.titles';
-const LOCAL_STORAGE_NOTE_KEY = 'todo.notes';
-const LOCAL_STORAGE_PRIORITY_KEY = 'todo.priorities';
-const LOCAL_STORAGE_DATE_KEY = 'todo.dates';
+function Note(title, note, priority, date) {
+  this.title = title;
+  this.note = note;
+  this.priority = priority;
+  this.date = date;
+}
 
-let titles = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TITLE_KEY)) || [];
+const LOCAL_STORAGE_NOTE_KEY = 'todo.savedNotes';
 let notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NOTE_KEY)) || [];
-let priorities = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PRIORITY_KEY)) || [];
-let dates = JSON.parse(localStorage.getItem(LOCAL_STORAGE_DATE_KEY)) || [];
 
 let timestamps = document.querySelectorAll('.timeago')
 
@@ -27,15 +27,8 @@ let magicGrid = new MagicGrid({
 })
 magicGrid.listen();
 
-for (let i = 0; i < titles.length; i++) {
-  addNote(titles[i], notes[i], priorities[i], dates[i]);
-}
-
-function kaszka() {
-    for (let i = 0; i < 2; i++) {
-      addNote(titles[i], notes[i], priorities[i], dates[i]);
-    }
-    console.log(titles);
+for (let i = 0; i < notes.length; i++) {
+  addNote(notes[i].title, notes[i].note, notes[i].priority, notes[i].date);
 }
 
 function isEmptyOrSpaces(str){
@@ -46,7 +39,6 @@ const toggleSwitch = document.querySelector('input[type="checkbox"]');
 function switchTheme(e) {
     if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        kaszka();
     }
     else {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -72,7 +64,7 @@ let x = function() {
 window.addEventListener('scroll', throttle(x, 1000))
 // !FIX THIS
 
-function addNote(title, note, priority, cacheLoad = true, date = Date.now()) {
+function addNote(title, note, priority, date) {
   if (isEmptyOrSpaces(title) && isEmptyOrSpaces(note)) {
     let notification = document.createElement("div");
     notification.classList.add('notification');
@@ -94,13 +86,6 @@ function addNote(title, note, priority, cacheLoad = true, date = Date.now()) {
     }, 4000);
 
     return;
-  }
-
-  if (cacheLoad == false) {
-    titles.push(title);
-    notes.push(note);
-    priorities.push(priority);
-    dates.push(date);
   }
 
   let card = document.createElement("div");
@@ -129,6 +114,8 @@ function addNote(title, note, priority, cacheLoad = true, date = Date.now()) {
   let timeDiv = document.createElement("div");
   timeDiv.classList.add("timeago");
   timeDiv.setAttribute("datetime", date);
+  timeDiv.setAttribute("data-timestamp", date);
+  
 
   timewrapDiv.appendChild(timeLogo);
   timewrapDiv.appendChild(timeDiv);
@@ -141,11 +128,6 @@ function addNote(title, note, priority, cacheLoad = true, date = Date.now()) {
   card.appendChild(contentDiv);
 
   cardContainer.appendChild(card);
-
-  localStorage.setItem(LOCAL_STORAGE_TITLE_KEY, JSON.stringify(titles));
-  localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
-  localStorage.setItem(LOCAL_STORAGE_PRIORITY_KEY, JSON.stringify(priorities));
-  localStorage.setItem(LOCAL_STORAGE_DATE_KEY, JSON.stringify(dates));
 
   magicGrid = new MagicGrid({
     container: '#cardContainer',
@@ -171,6 +153,12 @@ function delNote(note) {
   //!DODAJ USUWANIE NOTATKI Z CACHE, ZROB MOZE DATA-ATTRIBUTE DO KAZDEJ NOTATKI
   //??BEDZIESZ MUSIAL RENDEROWAC NA NOWO
   //## CZEMU U CIEBIE W EDYTORZE NIE MA KOLOROW NA ROZNYCH TEKSTACH TAK JAK NA WEBDEV SIMPLIFIED? MASZ WSZYSTKO BIALE PRAWIE A ON WSZYSTKO KOLORWE
+  let uniqueTimestamp = event.target.nextSibling.lastChild.lastChild.getAttribute("data-timestamp");
+  notes = notes.filter(function( obj ) {
+    return obj.date != uniqueTimestamp;
+  });
+  localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
+
   note.parentNode.parentNode.removeChild(note.parentNode);
 
   magicGrid = new MagicGrid({
@@ -198,8 +186,14 @@ newNoteModal.onclick = function(event) {
   }
   if (event.target.classList.contains("modalAcceptLogo")) {
     newNoteModal.style.display = "none";
+
     let priority = document.querySelector('input[name="priority"]:checked').value;
-    addNote(title1.value, note1.value, priority, false);
+    let newObjectNote = new Note(title1.value, note1.value, priority, Date.now());
+    notes.push(newObjectNote);
+    localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
+
+    addNote(newObjectNote.title, newObjectNote.note, newObjectNote.priority, newObjectNote.date)
+    
     modalCardContent.reset();
     modalBackground.classList.remove("boxblur");
     document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
