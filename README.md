@@ -1,6 +1,8 @@
 ![Main Logo](https://i.imgur.com/lDNv8FH.png)
 # dotoList - The modern to-do list.
 
+# LIVE DEMO: https://affectionate-agnesi-835f87.netlify.com/
+
 This is my first Javascript project, made completely from scratch without a framework, for learning purposes. It's yet another to-do list, that does nothing unusual, it works like you think it would. You are able to add notes with given title and actual note content. You can set a priority on your note, ranging from green being the least important to red being the most urgent. It automatiacally adds a timestamp so you can easily track how long ago you added the note.
 
 Features:
