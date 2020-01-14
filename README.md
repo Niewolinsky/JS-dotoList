@@ -12,8 +12,9 @@ Features:
 To-do (lol):
 - backend for online note saving
 - fixing issues with sticky header on scroll
-- other minor improvements
+- notes filtering & sorting by priority or timestamp
 - add an options to disable animations, for slower devices
+- other minor improvements
 
 Technologies & tools:
 - Visual Studio Code
