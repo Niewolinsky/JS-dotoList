@@ -62,16 +62,32 @@
     filter: brightness(1.15) hue-rotate(120deg) saturate(0.41);
 }
 
+.filter-green:hover {
+    filter: brightness(1.15) hue-rotate(120deg) saturate(0.41) drop-shadow(16px 16px 20px black);
+}
+
 .filter-red {
     filter: saturate(1.2);
+}
+
+.filter-red:hover {
+    filter: saturate(1.2) drop-shadow(16px 16px 20px black);
 }
 
 .filter-orange {
     filter: brightness(1.9) hue-rotate(42deg) saturate(1.5);
 }
 
+.filter-orange:hover {
+    filter: brightness(1.9) hue-rotate(42deg) saturate(1.5) drop-shadow(16px 16px 20px black);
+}
+
 .filter-grey {
     filter: contrast(2.25) grayscale(1) hue-rotate(40deg) invert(1) saturate(1.39);
+}
+
+.filter-grey:hover {
+    filter: contrast(2.25) grayscale(1) hue-rotate(40deg) invert(1) saturate(1.39) drop-shadow(16px 16px 20px black);
 }
 
 html {
@@ -120,6 +136,10 @@ header {
 #userLogin {
     width: var(--userLogo-width);
     filter: invert();
+}
+
+#userLogin:hover {
+    filter: invert() drop-shadow(16px 16px 20px black);
 }
 
 /* MAIN CARD CONTAINER */
@@ -199,6 +219,10 @@ p {
     background-image: url(svgs/new.svg);
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+#addButton:hover {
+    filter: drop-shadow(16px 16px 20px black);
 }
 
 /* EXTRAS */
@@ -416,7 +440,7 @@ input:focus {
     to {opacity: 0}
 }
 
-.notification > .notificationIcon {
+.notification > .notificationIconNoteEmpty {
     flex: 2;
 
     display: flex;
@@ -429,7 +453,7 @@ input:focus {
     background-color: #BD7600; 
 }
 
-.notification > .notificationMessage {
+.notification > .notificationMessageNoteEmpty {
     flex: 10;
 
     display: flex;
@@ -437,6 +461,30 @@ input:focus {
     justify-content: center;
 
     background-color: #e89a30; 
+}
+
+.notification > .notificationIconLoginDisabled {
+    flex: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    padding: 10px;
+    font-family: 'Roboto Slab', serif;
+
+    background-color: #C0C0C0; 
+}
+
+.notification > .notificationMessageLoginDisabled {
+    flex: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #E8EDF0; 
 }
 
 /* SCREEN WIDTH: 1169 */

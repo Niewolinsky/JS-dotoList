@@ -32,25 +32,46 @@ function refreshGrid() {
 function notificationPopup(notificationType) {
   switch (notificationType) {
     case 'note-empty':
-      let notification = document.createElement("div");
-      notification.classList.add('notification');
+      let notificationNoteEmpty = document.createElement("div");
+      notificationNoteEmpty.classList.add('notification');
     
-      let notificationIcon = document.createElement("div");
-      notificationIcon.classList.add('notificationIcon');
-      notificationIcon.innerHTML = '!';
+      let notificationIconNoteEmpty = document.createElement("div");
+      notificationIconNoteEmpty.classList.add('notificationIconNoteEmpty');
+      notificationIconNoteEmpty.innerHTML = '!';
     
-      let notificationMessage = document.createElement("div"); 
-      notificationMessage.classList.add('notificationMessage');
-      notificationMessage.innerHTML = 'Cannot add empty notes!';
+      let notificationMessageNoteEmpty = document.createElement("div"); 
+      notificationMessageNoteEmpty.classList.add('notificationMessageNoteEmpty');
+      notificationMessageNoteEmpty.innerHTML = 'Cannot add empty notes!';
     
-      notification.appendChild(notificationIcon);
-      notification.appendChild(notificationMessage);
-      document.body.appendChild(notification)
+      notificationNoteEmpty.appendChild(notificationIconNoteEmpty);
+      notificationNoteEmpty.appendChild(notificationMessageNoteEmpty);
+      document.body.appendChild(notificationNoteEmpty)
     
       setTimeout(function() {
         document.body.removeChild(document.body.lastChild);
       }, 4000);
       break;
+
+      case 'login-disabled':
+        let notificationLoginDisabled = document.createElement("div");
+        notificationLoginDisabled.classList.add('notification');
+      
+        let notificationIconLoginDisabled = document.createElement("div");
+        notificationIconLoginDisabled.classList.add('notificationIconLoginDisabled');
+        notificationIconLoginDisabled.innerHTML = ':(';
+      
+        let notificationMessageLoginDisabled = document.createElement("div"); 
+        notificationMessageLoginDisabled.classList.add('notificationMessageLoginDisabled');
+        notificationMessageLoginDisabled.innerHTML = 'Logging in not yet available.';
+      
+        notificationLoginDisabled.appendChild(notificationIconLoginDisabled);
+        notificationLoginDisabled.appendChild(notificationMessageLoginDisabled);
+        document.body.appendChild(notificationLoginDisabled)
+      
+        setTimeout(function() {
+          document.body.removeChild(document.body.lastChild);
+        }, 4000);
+        break;  
     
     default:
       return;
@@ -152,6 +173,10 @@ addButton.onclick = function(e) {
   newNoteModal.style.removeProperty('display')
   modalBackground.classList.add("boxblur")
   document.getElementsByClassName('particles-js-canvas-el')[0].classList.add("boxblur")
+}
+
+userLogin.onclick = function(e) {
+  notificationPopup('login-disabled')
 }
 
 cardContainer.onclick = function(e) {
