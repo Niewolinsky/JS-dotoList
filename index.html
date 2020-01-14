@@ -1,54 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="author" content="https://github.com/Niewolinsky">
+  <meta name="description" content="This is a to-do list.">
+  <meta property="og:image" content="https://i.imgur.com/uvLJn1m.png">
+  <meta property="og:description" content="This is a to-do list.">
+  <meta property="og:title" content="dotoList - The modern to-do list.">
 	<link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
   <script type="module" src="script.js" defer></script>
-<title>The dotoList</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>dotoList - The modern to-do list.</title>
 </head>
 <body>
   <div id="modalBackground">
-  <header id="header" style="display: flex">
-    <div id="switchContainer" class="switch">
-      <input type="checkbox" id="darkMode">
-      <label for="darkMode">-------------</label>
-    </div>
-    <img src="pngs/mainLogo.png" alt="Main Logo" id="mainLogo">
-    <img src="svgs/user.svg" alt="User Logo" class="userLogin">
-  </header>
-
-  <div id="cardContainer">
-
-    <div class="card">
-      <img src="svgs/remove.svg" alt="Remove Logo" class="removeLogo filter-red">
-      <div class="cardContent">
-        <h2>Be subtlea sd das dsa asd sda sad</h2>
-        <p>Layer colors with an abstract design or subtle background pattern. Patterns load a lot faster than images and can support retina resolutions automatically via SVG.</p>
-        <div class="timestampWrapper">
-          <img src="svgs/time.svg" alt="Clock Logo" class="clockLogo">
-          <div class="timeago" datetime="1578649496" data-timestamp="1578649496"></div>
-        </div>
+    <header id="header">
+      <div id="switchContainer" class="switch">
+        <input type="checkbox" id="darkMode">
+        <label for="darkMode">-------------</label>
       </div>
+      <img src="pngs/mainLogo.png" alt="Main Logo" id="mainLogo">
+      <img src="svgs/user.svg" alt="User Logo" id="userLogin">
+    </header>
+
+    <div id="cardContainer">
+      <!-- GENERATED NOTES GO HERE -->
     </div>
-
   </div>
+  
+  <footer>
+    <button id="addButton"></button>
+  </footer>
 
-  </div>
-  <button id="addButton"></button>
 
+  <!-- HIDDEN POP-UP NEW NOTE MODAL -->
   <div id="newNoteModal" class="modal card" style="display: none">
     <img src="svgs/remove.svg" alt="Remove Logo" class="modalRemoveLogo filter-grey">
     <img src="svgs/accept.svg" alt="Accept Logo" class="modalAcceptLogo filter-grey">
 
-    <form class="modalCardContent" id="modalCardContent">
-      <input type="text" placeholder="Title..." class="title" id="title1">
-      <textarea name="note" class="note" rows="5" cols="33" placeholder="Note..." id="note1"></textarea>
+    <form action="" class="modalCardContent" id="modalCardContent">
+      <input type="text" class="title" id="noteTitle" placeholder="Title...">
+      <textarea name="note" class="note" id="noteNote" placeholder="Note..." rows="5" cols="33"></textarea>
     </form>
 
-    <div class="switchB" id="testSwitch">
+    <div class="switchB">
       <input type="radio" name="priority" id="low" value="filter-green" checked/>
         <label for="low" class="switchB__label">•</label>
       <input type="radio" name="priority" id="med" value="filter-orange"/>

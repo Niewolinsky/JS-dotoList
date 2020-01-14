@@ -1,93 +1,75 @@
 'use strict'
-import MagicGrid    from '/web_modules/magic-grid.js';
-import { render }   from '/web_modules/timeago.js';
+// MODULES & PACKAGES
+import MagicGrid    from '/web_modules/magic-grid.js'
+import { render }   from '/web_modules/timeago.js'
 import { throttle } from '/web_modules/tiny-throttle.js'
-import '/web_modules/particles.js';
-particlesJS.load('particles-js', 'particlesconfig.json')
+import                   '/web_modules/particles.js'
 
-function Note(title, note, priority, date) {
-  this.title = title;
-  this.note = note;
-  this.priority = priority;
-  this.date = date;
+// GLOBAL FUNCTIONS //
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^\s*$/) !== null
 }
 
-const LOCAL_STORAGE_NOTE_KEY = 'todo.savedNotes';
-let notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NOTE_KEY)) || [];
+function modalCardReset() {
+  modalCardContent.reset();
+  modalBackground.classList.remove("boxblur");
+  document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
+}
 
-let timestamps = document.querySelectorAll('.timeago')
-
-let magicGrid = new MagicGrid({
+function refreshGrid() {
+  magicGrid = new MagicGrid({
     container: '#cardContainer',
     animate: true,
     gutter: 30,
     maxColumns: 3,
     static: true,
     useMin: true
-})
-magicGrid.listen();
+  });
 
-for (let i = 0; i < notes.length; i++) {
-  addNote(notes[i].title, notes[i].note, notes[i].priority, notes[i].date);
+  magicGrid.listen();
 }
 
-function isEmptyOrSpaces(str){
-  return str === null || str.match(/^\s*$/) !== null;
-}
-
-const toggleSwitch = document.querySelector('input[type="checkbox"]');
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    else {
-        document.documentElement.setAttribute('data-theme', 'light');
-    }    
-}
-toggleSwitch.addEventListener('change', switchTheme, false);
-
-let sticky = header.offsetTop + 80;
-function stickiedHeader() {
-  if (window.pageYOffset > sticky) {
-    document.documentElement.setAttribute('data-scroll', 'scrolled');
-  } else {
-    document.documentElement.setAttribute('data-scroll', 'nonscrolled');
+function notificationPopup(notificationType) {
+  switch (notificationType) {
+    case 'note-empty':
+      let notification = document.createElement("div");
+      notification.classList.add('notification');
+    
+      let notificationIcon = document.createElement("div");
+      notificationIcon.classList.add('notificationIcon');
+      notificationIcon.innerHTML = '!';
+    
+      let notificationMessage = document.createElement("div"); 
+      notificationMessage.classList.add('notificationMessage');
+      notificationMessage.innerHTML = 'Cannot add empty notes!';
+    
+      notification.appendChild(notificationIcon);
+      notification.appendChild(notificationMessage);
+      document.body.appendChild(notification)
+    
+      setTimeout(function() {
+        document.body.removeChild(document.body.lastChild);
+      }, 4000);
+      break;
+    
+    default:
+      return;
   }
 }
 
-// !TUTAJ performance issue
-let x = function() {
-  stickiedHeader();
-  console.log('click');
-};
+function delNote(note) {
+  let uniqueTimestamp = event.target.nextSibling.lastChild.lastChild.getAttribute("data-timestamp");
+  notes = notes.filter(function( obj ) {
+    return obj.date != uniqueTimestamp;
+  });
+  localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
 
-window.addEventListener('scroll', throttle(x, 1000))
-// !FIX THIS
+  note.parentNode.parentNode.removeChild(note.parentNode);
 
-function addNote(title, note, priority, date) {
-  if (isEmptyOrSpaces(title) && isEmptyOrSpaces(note)) {
-    let notification = document.createElement("div");
-    notification.classList.add('notification');
+  refreshGrid();
+}
 
-    let notificationIcon = document.createElement("div");
-    notificationIcon.classList.add('notificationIcon');
-    notificationIcon.innerHTML = '!';
-
-    let notificationMessage = document.createElement("div"); 
-    notificationMessage.classList.add('notificationMessage');
-    notificationMessage.innerHTML = 'Cannot add empty notes!';
-
-    notification.appendChild(notificationIcon);
-    notification.appendChild(notificationMessage);
-    document.body.appendChild(notification)
-
-    setTimeout(function() {
-      document.body.removeChild(document.body.lastChild);
-    }, 4000);
-
-    return;
-  }
-
+function addNote( {title, note, priority, date} ) {
   let card = document.createElement("div");
   card.className = "card";
 
@@ -129,73 +111,91 @@ function addNote(title, note, priority, date) {
 
   cardContainer.appendChild(card);
 
-  magicGrid = new MagicGrid({
-    container: '#cardContainer',
-    animate: true,
-    gutter: 30,
-    maxColumns: 3,
-    static: true,
-    useMin: true
-  });
-  magicGrid.listen();
+  refreshGrid();
 
   timestamps = document.querySelectorAll('.timeago');
   render(timestamps);
 }
 
-addButton.onclick = function(event) {
-  newNoteModal.style.removeProperty('display');
-  modalBackground.classList.add("boxblur");
-  document.getElementsByClassName('particles-js-canvas-el')[0].classList.add("boxblur");
+// GLOBAL VARIABLE DEFINITIONS & ON-LOAD FUNCTIONS //
+particlesJS.load('particles-js', 'particlesconfig.json')
+
+function Note(title, note, priority, date) {
+  this.title = title
+  this.note = note
+  this.priority = priority
+  this.date = date
 }
 
-function delNote(note) {
-  //!DODAJ USUWANIE NOTATKI Z CACHE, ZROB MOZE DATA-ATTRIBUTE DO KAZDEJ NOTATKI
-  //??BEDZIESZ MUSIAL RENDEROWAC NA NOWO
-  //## CZEMU U CIEBIE W EDYTORZE NIE MA KOLOROW NA ROZNYCH TEKSTACH TAK JAK NA WEBDEV SIMPLIFIED? MASZ WSZYSTKO BIALE PRAWIE A ON WSZYSTKO KOLORWE
-  let uniqueTimestamp = event.target.nextSibling.lastChild.lastChild.getAttribute("data-timestamp");
-  notes = notes.filter(function( obj ) {
-    return obj.date != uniqueTimestamp;
-  });
-  localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
+let timestamps
+let magicGrid
+const LOCAL_STORAGE_NOTE_KEY = 'todo.savedNotes'
+let notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NOTE_KEY)) || []
 
-  note.parentNode.parentNode.removeChild(note.parentNode);
-
-  magicGrid = new MagicGrid({
-    container: '#cardContainer',
-    animate: true,
-    gutter: 30,
-    maxColumns: 3,
-    static: true,
-    useMin: true
-  });
-  magicGrid.listen();
+for (let note of notes) {
+  addNote(note)
 }
 
-cardContainer.onclick = function(event) {
-  if (event.target.classList.contains("removeLogo")) delNote(event.target);
-}
+const toggleSwitch = document.querySelector('input[type="checkbox"]') //ELEMENT: toggle switch for darkmode/lightmode
 
-// ADD NEW NOTE MODAL
-newNoteModal.onclick = function(event) {
-  if (event.target.classList.contains("modalRemoveLogo")) {
-    newNoteModal.style.display = "none";
-    modalCardContent.reset();
-    modalBackground.classList.remove("boxblur");
-    document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
+// EVENT LISTENERS & HANDLERS //
+toggleSwitch.onchange = function(e) {
+  if (e.target.checked) {
+    document.documentElement.setAttribute('data-theme', 'dark')
   }
-  if (event.target.classList.contains("modalAcceptLogo")) {
-    newNoteModal.style.display = "none";
+  else {
+    document.documentElement.setAttribute('data-theme', 'light')
+  }  
+}
+
+addButton.onclick = function(e) {
+  newNoteModal.style.removeProperty('display')
+  modalBackground.classList.add("boxblur")
+  document.getElementsByClassName('particles-js-canvas-el')[0].classList.add("boxblur")
+}
+
+cardContainer.onclick = function(e) {
+  if (e.target.classList.contains("removeLogo")) delNote(e.target);
+}
+
+newNoteModal.onclick = function(e) {
+  if (e.target.classList.contains("modalRemoveLogo")) {
+    newNoteModal.style.display = "none"
+
+    modalCardReset()
+  }
+
+  else if (e.target.classList.contains("modalAcceptLogo")) {
+    newNoteModal.style.display = "none"
+
+    if (isEmptyOrSpaces(noteTitle.value) && isEmptyOrSpaces(noteNote.value)) {
+      notificationPopup('note-empty')
+      modalCardReset()
+      return;
+    }
 
     let priority = document.querySelector('input[name="priority"]:checked').value;
-    let newObjectNote = new Note(title1.value, note1.value, priority, Date.now());
-    notes.push(newObjectNote);
-    localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes));
-
-    addNote(newObjectNote.title, newObjectNote.note, newObjectNote.priority, newObjectNote.date)
+    let newObjectNote = new Note(noteTitle.value, noteNote.value, priority, Date.now())
+    notes.push(newObjectNote)
+    localStorage.setItem(LOCAL_STORAGE_NOTE_KEY, JSON.stringify(notes))
+    addNote(newObjectNote)
     
-    modalCardContent.reset();
-    modalBackground.classList.remove("boxblur");
-    document.getElementsByClassName('particles-js-canvas-el')[0].classList.remove("boxblur");
+    modalCardReset()
   }
 }
+
+// !FIX PERFORMANCE AND BUGS
+let sticky = header.offsetTop + 80
+function stickiedHeader() {
+  if (window.pageYOffset > sticky) {
+    document.documentElement.setAttribute('data-scroll', 'scrolled')
+  } 
+  else {
+    document.documentElement.setAttribute('data-scroll', 'nonscrolled')
+  }
+}
+let x = function() {
+  stickiedHeader();
+};
+window.addEventListener('scroll', throttle(x, 1000))
+// !FIX PERFORMANCE AND BUGS

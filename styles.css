@@ -117,7 +117,7 @@ header {
     padding-bottom: var(--mainLogo-paddingbot);
 }
 
-.userLogin {
+#userLogin {
     width: var(--userLogo-width);
     filter: invert();
 }
@@ -185,6 +185,21 @@ p {
 }
 
 /* FOOTER */
+#addButton {
+	position: fixed;
+	bottom: 2%;
+	right: 2%;
+	
+    width: 60px;
+    height: 60px;
+
+	border: none;
+    border-radius: 50%;
+
+    background-image: url(svgs/new.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
 /* EXTRAS */
 .switch input[type="checkbox"] {
@@ -224,22 +239,6 @@ p {
     background: #E79A2F;
     border: 1px solid #E79A2F;
     transition: all 0.3s ease-in;
-}
-
-#addButton {
-	position: fixed;
-	bottom: 2%;
-	right: 2%;
-	
-    width: 60px;
-    height: 60px;
-
-	border: none;
-    border-radius: 50%;
-
-    background-image: url(svgs/new.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 /* ADD NOTE MODAL */
@@ -392,39 +391,7 @@ input:focus {
     display: none;
 }
 
-/* SCREEN WIDTH: 1169 */
-@media (max-width: 1169px) {
-    #userLogin {
-        order: 1
-    }
-
-    #switchContainer, #switchContainer2 {
-        order: 2;
-    }
-
-    #mainLogo {
-        order: 0;
-    }
-
-}
-
-@media (max-width: 779px) {
-    #userLogin {
-        order: 1;
-    }
-
-    #switchContainer, #switchContainer2 {
-        order: 2;
-    }
-
-    #mainLogo {
-        order: 0;
-        width: var(--smallLogo-width);
-        padding-bottom: 5px;
-        content:url("pngs/smallLogo.png");
-    }
-}
-
+/* NOTIFICATION MODAL */
 .notification {
     animation: 4s notificationOpacity;
     width: 300px;
@@ -470,4 +437,37 @@ input:focus {
     justify-content: center;
 
     background-color: #e89a30; 
+}
+
+/* SCREEN WIDTH: 1169 */
+@media (max-width: 1169px) {
+    #userLogin {
+        order: 1
+    }
+
+    #switchContainer, #switchContainer2 {
+        order: 2;
+    }
+
+    #mainLogo {
+        order: 0;
+    }
+
+}
+
+@media (max-width: 779px) {
+    #userLogin {
+        order: 1;
+    }
+
+    #switchContainer, #switchContainer2 {
+        order: 2;
+    }
+
+    #mainLogo {
+        order: 0;
+        width: var(--smallLogo-width);
+        padding-bottom: 5px;
+        content:url("pngs/smallLogo.png");
+    }
 }
